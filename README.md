@@ -4,5 +4,9 @@ this a simple c++ database of a little library using 'SQLITE3'
 require SQLITE3
 ## Play
 to run the code type 
-> g++ test.cpp -o test -l sqlite3  
-> ./test
+>sudo pkg install sqlite && g++ test.cpp -o test -l sqlite3 && ./test
+or
+'''
+g++ test.cpp -o test -l sqlite3
+./test
+'''
