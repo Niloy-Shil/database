@@ -10,13 +10,17 @@ char pass[20];
 sqlite3 *db;
 char *sql;
 sqlite3_stmt* stm;
-sqlite3_open("test.db",&db);
+sqlite3_open("/data/data/com.termux/files/home/database/source/test.db",&db);
 cout<<"Welcome to the COllege library";
 R:
-cout<<"\nfor log in type 'l' and for regester type 'r' :";
+
+cout<<"\nfor admin login type 'a' , for student login type 'l' and for student regester type 'r' and for quit type 'q':";
 cin>>a;
 //for login
-if(a=='l')
+if(a=='a'|| a=='A')
+{
+}
+else if(a=='l')
 {
 cout<<"Name:";
 cin>>name;
@@ -36,10 +40,9 @@ printf("YOUR DATA =\n %s\t %s \t %s",sqlite3_column_text(stm,1),sqlite3_column_t
 else{
 cout<<"\n no data found.please regester...";
 goto R;
-}
 
 }
-
+}
 //for regester
 else if(a=='r'){
 cout<<"Name:";
@@ -54,13 +57,18 @@ sqlite3_bind_text(stm, 1,name,-1,SQLITE_STATIC);
 sqlite3_bind_text(stm, 2,pass,-1,SQLITE_STATIC);
 sqlite3_bind_text(stm, 3,addr,-1,SQLITE_STATIC);
 }
+else if(a=='q')
+{
+
+return 0;
+}
 else
 {
 	cout<<"wrong input\n";
 	goto R;
 }
-sqlite3_step(stm);
+
 sqlite3_finalize(stm);
 sqlite3_close(db);
-
+return 0;
 }
