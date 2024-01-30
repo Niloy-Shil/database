@@ -5,3 +5,8 @@ require SQLITE3
 ## Play
 to run the code type 
 >sudo pkg install sqlite && g++ test.cpp -o test -l sqlite3 && ./test
+or
+'''
+g++ test.cpp -o test -l sqlite3
+./test
+'''
