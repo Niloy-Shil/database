@@ -110,6 +110,7 @@ if(r!=SQLITE_DONE)
 printf("YOUR DATA =\n%d\t %s\t %s \t %s",sqlite3_column_int(stm,0),sqlite3_column_text(stm,1),sqlite3_column_text(stm,2),sqlite3_column_text(stm,3));
 sqlite3_step(stm);
 sqlite3_finalize(stm);
+Z:
 char z;
 cout<<"\ndo you want to see the book list? If yes type  'y'  , to order a book type  'o' to exit type 'q'.\n Enter:";
 cin>>z;
@@ -145,43 +146,36 @@ sqlite3_bind_int(stm,1,x);
 sqlite3_bind_int(stm,2,y);
 sqlite3_step(stm);
 sqlite3_finalize(stm);
+cout<<"your data stored successfully";
+goto Z;
+
 }
-/*
+
 if(z=='s')
 {
 int x;
 cout<<"enter your id:";
 cin>>x;
-sql="select * from list where uid=?;";
-sqlite3_prepare_v2(db,sql,-1,&stm,NULL);
+char *zsql="select bname,bprize,_date from book inner join list on book._no=list.bid where list.uid=?;";
+sqlite3_prepare_v2(db,zsql,-1,&stm,NULL);
 sqlite3_bind_int(stm,1,x);
-int y = sqlite3_step(stm);
-printf("%d",sqlite3_column_int(stm,0));
-//cout<<"\n R="<<R;
-//if(y!=SQLITE_DONE)
-//{
+int y=sqlite3_step(stm);
 while(y!=SQLITE_DONE)
 {
-sqlite3_stmt* qtm;
-sqlite3_prepare_v2(db,"select * form book where _no=?",-1,&qtm,NULL);
-int R=sqlite3_column_int(stm,0);
-sqlite3_bind_int(qtm,1,R),
-sqlite3_step(qtm);
-printf("\n %s \t %s \t %s",sqlite3_column_text(qtm,1),sqlite3_column_text(qtm,2),sqlite3_column_text(stm,2));
-sqlite3_finalize(qtm);
+printf("\n %s \t %s \t %s",sqlite3_column_text(stm,0),sqlite3_column_text(stm,1),sqlite3_column_text(stm,2));
 y=sqlite3_step(stm);
 }
-sqlite3_step(stm);
 sqlite3_finalize(stm);
-}//
-//else
-//{
-//out<<"please order first";
-//sqlite3_finalize(stm);//}//
+goto Z;
+}
 
+else
+{
+cout<<"please order first";
+sqlite3_finalize(stm);
+goto Z;
+}
 
-
-*/
 }
 
 else{
@@ -222,7 +216,6 @@ else
 	cout<<"wrong input\n";
 	goto R;
 }
-sqlite3_step(stm);
 sqlite3_finalize(stm);
 sqlite3_close(db);
 return 0;
