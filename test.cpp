@@ -36,7 +36,7 @@ char prize[10];
 int left;
 printf("\nWelcome Mr. %s",sqlite3_column_text(stm,0));
 A:
-cout<<"\n to see the book list enter 'l' ,to add book list 'a',to see student list enter 's' :";
+cout<<"\n to see the book list enter 'l' ,to add book list 'a',to see student list enter 's' to quit type'q'.\n Enter::";
 cin>>d;
 if (d=='a') {
 cout<<"Book name:";
@@ -57,8 +57,6 @@ goto A;
 }
 else if(d=='q')
 {
-	sqlite3_step(stm);
-	sqlite3_finalize(stm);
 	sqlite3_close(db);
 	return 0;
 }
@@ -109,11 +107,83 @@ sqlite3_bind_text(stm, 2,pass,-1,SQLITE_STATIC);
 int r =sqlite3_step(stm);
 if(r!=SQLITE_DONE)
 {
-printf("YOUR DATA =\n %s\t %s \t %s",sqlite3_column_text(stm,1),sqlite3_column_text(stm,2),sqlite3_column_text(stm,3));
+printf("YOUR DATA =\n%d\t %s\t %s \t %s",sqlite3_column_int(stm,0),sqlite3_column_text(stm,1),sqlite3_column_text(stm,2),sqlite3_column_text(stm,3));
 sqlite3_step(stm);
 sqlite3_finalize(stm);
-	
+char z;
+cout<<"\ndo you want to see the book list? If yes type  'y'  , to order a book type  'o' to exit type 'q'.\n Enter:";
+cin>>z;
+if(z=='y')
+{
+
+sql="select * from book;";
+sqlite3_prepare_v2(db,sql,-1,&stm,NULL);
+int rc = sqlite3_step(stm);
+while(rc!=SQLITE_DONE)
+{
+printf("%d \t %s \t %s \t %d \n",sqlite3_column_int(stm, 0), sqlite3_column_text(stm, 1),sqlite3_column_text(stm, 2), sqlite3_column_int(stm, 3));
+rc = sqlite3_step(stm);
 }
+sqlite3_finalize(stm);
+}
+if(z=='q')
+{
+system("clear");
+goto R;
+}
+if(z=='o')
+{
+sql="insert into list(bid,uid) values(?,?);";
+int x;
+int y;
+cout<<"Enter book id:";
+cin>>x;
+cout<<"Enrer user id:";
+cin>>y;
+sqlite3_prepare_v2(db,sql,-1,&stm,NULL );
+sqlite3_bind_int(stm,1,x);
+sqlite3_bind_int(stm,2,y);
+sqlite3_step(stm);
+sqlite3_finalize(stm);
+}
+/*
+if(z=='s')
+{
+int x;
+cout<<"enter your id:";
+cin>>x;
+sql="select * from list where uid=?;";
+sqlite3_prepare_v2(db,sql,-1,&stm,NULL);
+sqlite3_bind_int(stm,1,x);
+int y = sqlite3_step(stm);
+printf("%d",sqlite3_column_int(stm,0));
+//cout<<"\n R="<<R;
+//if(y!=SQLITE_DONE)
+//{
+while(y!=SQLITE_DONE)
+{
+sqlite3_stmt* qtm;
+sqlite3_prepare_v2(db,"select * form book where _no=?",-1,&qtm,NULL);
+int R=sqlite3_column_int(stm,0);
+sqlite3_bind_int(qtm,1,R),
+sqlite3_step(qtm);
+printf("\n %s \t %s \t %s",sqlite3_column_text(qtm,1),sqlite3_column_text(qtm,2),sqlite3_column_text(stm,2));
+sqlite3_finalize(qtm);
+y=sqlite3_step(stm);
+}
+sqlite3_step(stm);
+sqlite3_finalize(stm);
+}//
+//else
+//{
+//out<<"please order first";
+//sqlite3_finalize(stm);//}//
+
+
+
+*/
+}
+
 else{
 cout<<"\n no data found.please regester...";
 goto R;
@@ -135,6 +205,11 @@ sqlite3_bind_text(stm, 2,pass,-1,SQLITE_STATIC);
 sqlite3_bind_text(stm, 3,addr,-1,SQLITE_STATIC);
 sqlite3_step(stm);
 sqlite3_finalize( stm);
+cout<<"\nRegestration Complete.Press any key.Login and order:";
+char Tt;
+cin>>Tt;
+system("clear");
+goto R;
 }
 //for exit
 else if(a=='q')
@@ -147,7 +222,7 @@ else
 	cout<<"wrong input\n";
 	goto R;
 }
-
+sqlite3_step(stm);
 sqlite3_finalize(stm);
 sqlite3_close(db);
 return 0;
