@@ -8,9 +8,13 @@ to install sqlite3 in your linux pc type
 to run the code type 
 > sudo pkg install sqlite
 </br>
+
 > g++ test.cpp -o test -l sqlite3
+
 </br>
+
 > ./test
+
 </br>
 or
 </br>
