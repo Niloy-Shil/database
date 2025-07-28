@@ -12,9 +12,13 @@ It is based on only the orbitals of
 
 but according to neuclear physics it doesn't work on the higher atomic number molecule
 it depends on
-> Electron shielding
-> Nuclear charge (Z)
-> Relativistic effects (important in heavy atoms)
+<ul>
+  <li> Electron shielding
+  </li>
+  <li>Nuclear charge (Z)</li>
+  <li>Relativistic effects (important in heavy atoms)</li>
+</ul>
+
 
 # database
 this a simple c++ database of a little library using 'SQLITE3'
