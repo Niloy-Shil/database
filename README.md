@@ -4,7 +4,7 @@
 <li>Electron Configuration </li>
 <li> Database </li>
 
-#Electron Configuration 
+# Electron Configuration 
 This simply works on based in energy efficiency like the energy of the orbital.
 It is based on only the orbitals of
 
